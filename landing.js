@@ -43,3 +43,33 @@ function myFunction() {
     	procureStage.classList.remove(bgFocusClassName);
     }
 }
+ 
+function myMap() {
+            var locations = [
+                [27.492413, 77.673676, 1],
+                [23.344101,  85.309563, 2],
+                [12.907459,  77.601682, 3]
+            ];
+            var myLoc = new google.maps.LatLng(12.9716,77.5946);
+            var mapProp = {
+                center: myLoc,
+                zoom: 4
+            };
+
+            var map = new google.maps.Map(document.getElementById("location_div"), mapProp);
+            var infowindow = new google.maps.InfoWindow();
+            var marker, i;
+            for (i = 0; i < locations.length; i++) { 
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                    map: map
+                });
+
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                    infowindow.setContent(locations[i][0]);
+                    infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+        }
